@@ -3,12 +3,11 @@ class NotificationsController < ApplicationController
   before_filter :ensure_logged_in
 
   def index
-    notifications = dropdown.notifications.to_a
-    dropdown.mark_as_seen if notifications.present?
+    dropdown.mark_as_seen if dropdown.notifications.present?
     current_user.reload
     current_user.publish_notifications_state
 
-    render_serialized(notifications, NotificationSerializer)
+    render_serialized(dropdown.notifications, NotificationSerializer)
   end
 
   private
