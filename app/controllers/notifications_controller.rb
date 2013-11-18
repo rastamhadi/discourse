@@ -3,7 +3,7 @@ class NotificationsController < ApplicationController
   before_filter :ensure_logged_in
 
   def index
-    dropdown.mark_as_seen if dropdown.notifications.present?
+    dropdown.mark_as_seen
     current_user.reload
     current_user.publish_notifications_state
 

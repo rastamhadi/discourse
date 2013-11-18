@@ -8,7 +8,7 @@ class NotificationsDropdown
 
   def mark_as_seen
     User.where(["id = ? and seen_notification_id < ?", user, top_notification])
-        .update_all ["seen_notification_id = ?", top_notification]
+        .update_all(["seen_notification_id = ?", top_notification]) if notifications.present?
   end
 
   def notifications
