@@ -218,11 +218,6 @@ class User < ActiveRecord::Base
     unread_notifications_by_type.except(Notification.types[:private_message]).values.sum
   end
 
-  def saw_notification_id(notification_id)
-    User.where(["id = ? and seen_notification_id < ?", id, notification_id])
-        .update_all ["seen_notification_id = ?", notification_id]
-  end
-
   def publish_notifications_state
     MessageBus.publish("/notification/#{id}",
                        {unread_notifications: unread_notifications,
