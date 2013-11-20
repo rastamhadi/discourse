@@ -8,7 +8,6 @@ class Notification < ActiveRecord::Base
   validates_presence_of :notification_type
 
   scope :unread, lambda { where(read: false) }
-  scope :recent, lambda { order('created_at desc').limit(10) }
   scope :latest, lambda { |limit| order('created_at desc').limit(limit) }
   scope :private_messages, lambda { where(notification_type: Notification.types[:private_message]) }
 

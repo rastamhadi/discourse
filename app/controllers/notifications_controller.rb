@@ -3,7 +3,7 @@ class NotificationsController < ApplicationController
   before_filter :ensure_logged_in
 
   def index
-    notifications = current_user.notifications.recent.includes(:topic)
+    notifications = current_user.notifications.latest(10).includes(:topic)
 
     if notifications.present?
       notifications += current_user.notifications.latest(5).unread.private_messages
