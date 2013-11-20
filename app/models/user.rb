@@ -201,7 +201,7 @@ class User < ActiveRecord::Base
   end
 
   def unread_notifications_by_type
-    @unread_notifications_by_type ||= notifications.where("id > ? and read = false", seen_notification_id).group(:notification_type).count
+    @unread_notifications_by_type ||= notifications.unread.where("id > ?", seen_notification_id).group(:notification_type).count
   end
 
   def reload
@@ -211,7 +211,7 @@ class User < ActiveRecord::Base
   end
 
   def unread_private_messages
-    @unread_pms ||= notifications.where("read = false AND notification_type = ?", Notification.types[:private_message]).count
+    @unread_pms ||= notifications.unread.where("notification_type = ?", Notification.types[:private_message]).count
   end
 
   def unread_notifications

@@ -6,9 +6,9 @@ class NotificationsController < ApplicationController
     notifications = current_user.notifications.recent.includes(:topic)
 
     if notifications.present?
-      notifications += current_user.notifications
+      notifications += current_user.notifications.unread
         .order('created_at desc')
-        .where(read: false, notification_type: Notification.types[:private_message])
+        .where(notification_type: Notification.types[:private_message])
         .where('id < ?', notifications.last.id)
         .limit(5)
     end
