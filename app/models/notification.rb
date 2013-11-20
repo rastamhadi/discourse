@@ -9,6 +9,7 @@ class Notification < ActiveRecord::Base
 
   scope :unread, lambda { where(read: false) }
   scope :recent, lambda { order('created_at desc').limit(10) }
+  scope :private_messages, lambda { where(notification_type: Notification.types[:private_message]) }
 
   after_save :refresh_notification_count
   after_destroy :refresh_notification_count

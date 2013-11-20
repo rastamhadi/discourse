@@ -211,7 +211,7 @@ class User < ActiveRecord::Base
   end
 
   def unread_private_messages
-    @unread_pms ||= notifications.unread.where("notification_type = ?", Notification.types[:private_message]).count
+    @unread_pms ||= notifications.unread.private_messages.count
   end
 
   def unread_notifications
